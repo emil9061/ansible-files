@@ -1,0 +1,42 @@
+---
+- name: vlan and ssh
+  hosts: webgroup
+  tasks:
+  
+  - name: install vconfig
+    yum:
+      name: vconfig
+      state: present
+    become: true
+    
+  - name: enable vlan support
+    modprobe:
+      name: 8021q
+      state: present
+    become: true    
+  
+  - name: create vlan
+    shell: vconfig add "{{ interface }}" "{{ vlan_id }}"
+    become: true
+
+  - name: set ip
+    shell: ip address add "{{ ip }}" dev "{{ interface + '.' + vlan_id }}"
+    become: true
+
+  - name: interface up
+    shell: ip link set dev "{{ interface + '.' + vlan_id }}" up
+    become: true
+    
+  - name: block ssh port 
+    iptables:
+      chain: INPUT
+      in_interface: "{{ interface + '.' + vlan_id }}"
+      protocol: tcp
+      match: tcp
+      destination_port: 22
+      jump: DROP
+    become: true
+  
+  - name: save iptables rule
+    shell: iptables-save > /etc/sysconfig/iptables
+    become: true

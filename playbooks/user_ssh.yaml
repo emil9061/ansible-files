@@ -1,0 +1,14 @@
+---
+# имя/пароль указываются с помощью extra vars
+- name: Create user & allow ssh 
+  hosts: webgroup
+  
+  tasks: 
+  - name: create user
+    user:
+      name: "{{ username }}"
+      password: "{{ password | password_hash('sha512') }}"
+      shell: /bin/bash
+      generate_ssh_key: yes
+      groups: "allowssh, wheel"
+    become: true

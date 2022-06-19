@@ -1,0 +1,11 @@
+---
+- name: add environment variable
+  hosts: webgroup
+
+  tasks:
+  - name: set env in bashrc
+    ansible.builtin.lineinfile:
+      path: "/home/{{ for_user }}/.bashrc"
+      line: export PS1=' [\w] (\t) \$' 
+      create: yes
+    become: true
