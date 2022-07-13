@@ -1,3 +1,6 @@
 [submodule "roles/nextcloud"]
 	path = roles/nextcloud
 	url = https://github.com/emil9061/nextcloud.git
+[submodule "roles/openvpn"]
+	path = roles/openvpn
+	url = https://github.com/emil9061/openvpn.git
