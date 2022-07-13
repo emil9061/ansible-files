@@ -1,7 +1,7 @@
 ### Available roles:
 
-- [nextcloud](github.com/emil9061/nextcloud)
-- [openvpn](github.com/emil9061/openvpn)
+- [nextcloud](roles/nextcloud)
+- [openvpn](roles/openvpn)
 
 
 ### Available playbooks:
